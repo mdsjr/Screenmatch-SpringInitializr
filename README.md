@@ -3,17 +3,40 @@
 ## Descrição
 Screenmatch é um aplicativo que consome APIs externas para exibir informações sobre séries e outros conteúdos. Ele utiliza o framework Spring Boot e integra bibliotecas como Jackson para manipulação de dados em JSON.
 
+Conectar dados disponibilizados pelo back-end à uma aplicação front-end, disponibilizada nesse [link](https://github.com/mdsjr/java-web-front).
+
 ---
 
 ## Funcionalidades
 
-- **Consumo de APIs externas**: Obtém dados de séries e imagens aleatórias de café por meio de endpoints públicos.
-- **Conversão de JSON para objetos Java**: Utiliza a biblioteca Jackson para mapear os dados recebidos para classes Java.
-- **Arquitetura modular**: Segue princípios de boas práticas com interfaces e classes bem definidas.
+- **Back-end com Spring Boot**:
+    - Consumo de APIs externas.
+    - Conversão de JSON para objetos Java com Jackson.
+    - Suporte a CORS para integração com o front-end.
+- **Front-end interativo**:
+    - Interface web que consome dados do back-end.
+    - Renderização de informações de séries e conteúdos de forma amigável.
 
 ---
 
 ## Estrutura do Projeto
+
+### Back-end
+
+- **Pacotes Principais**:
+    - **br.com.alura.screenmatch**: Classe principal que inicia a aplicação.
+    - **br.com.alura.screenmatch.model**: Modelos de dados (ex.: `DadosSerie`).
+    - **br.com.alura.screenmatch.service**: Classes de serviço para consumo de APIs (ex.: `ConsumoApi`, `ConverteDados`).
+    - **br.com.alura.screenmatch.config**: Configurações do projeto, como CORS.
+
+### Front-end
+
+- **Tecnologias Utilizadas**:
+    - HTML5, CSS3 e JavaScript.
+    - Integração com o back-end via requisições HTTP (fetch API).
+    - Extensão *Live Server* para execução local.
+
+---
 
 ### Pacotes Principais
 
@@ -25,21 +48,32 @@ Screenmatch é um aplicativo que consome APIs externas para exibir informações
 
 ## Tecnologias Utilizadas
 
-- **Java 17**
-- **Spring Boot**
-- **Jackson (ObjectMapper)**
-- **HttpClient**
+- **Back-end**:
+    - Java 17
+    - Spring Boot
+    - Jackson (ObjectMapper)
+    - HttpClient
+- **Front-end**:
+    - HTML5
+    - CSS3
+    - JavaScript
+    - Live Server (VS Code)
 
 ---
 
 ## Pré-requisitos
 
-- JDK 17 ou superior
-- Maven 3.8 ou superior
+- **Back-end**:
+    - JDK 17 ou superior
+    - Maven 3.8 ou superior
+- **Front-end**:
+    - VS Code com a extensão *Live Server*
 
 ---
 
 ## Como Executar o Projeto
+
+### Back-end
 
 1. Clone este repositório:
    ```bash
@@ -55,6 +89,32 @@ Screenmatch é um aplicativo que consome APIs externas para exibir informações
    ```
 4. Acompanhe a saída no console para ver os dados obtidos das APIs.
 
+### Front-end
+
+1. Clone o repositório front-end:
+   ```bash
+git clone https://github.com/mdsjr/screenmatch-frontend.git
+
+2. Abra o diretório do projeto no VS Code.
+
+3. Clique com o botão direito no arquivo `index.html` e selecione *Open with Live Server*.
+
+---
+## Configuração de CORS
+O back-end foi configurado para permitir o acesso do front-end hospedado localmente. 
+A configuração está no arquivo CorsConfiguration.java:
+
+---
+@Configuration
+public class CorsConfiguration implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://127.0.0.1:5501")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+    }
+}
 ---
 
 ## Endpoints Consumidos
